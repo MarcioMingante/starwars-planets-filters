@@ -1,18 +1,20 @@
 import { PlanetInfoType } from '../types/types';
 
-function TableItem({ name, rotation_period, orbital_period, diameter,
-  climate, gravity, terrain, surface_water, population, films, created,
-  edited, url }: PlanetInfoType) {
+function TableItem({ item }: { item: PlanetInfoType }) {
+  const { name, rotation_period: rotationPeriod, orbital_period: orbitalPeriod, diameter,
+    climate, gravity, terrain, surface_water: surfaceWater, population, films, created,
+    edited, url } = item;
+
   return (
     <tr>
       <td>{name}</td>
-      <td>{rotation_period}</td>
-      <td>{orbital_period}</td>
+      <td>{rotationPeriod}</td>
+      <td>{orbitalPeriod}</td>
       <td>{diameter}</td>
       <td>{climate}</td>
       <td>{gravity}</td>
       <td>{terrain}</td>
-      <td>{surface_water}</td>
+      <td>{surfaceWater}</td>
       <td>{population}</td>
       <td>{films}</td>
       <td>{created}</td>

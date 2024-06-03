@@ -8,7 +8,7 @@ export type PlanetInfoType = {
   terrain: string
   surface_water: string
   population: string
-  films: []
+  films: string[]
   created: string
   edited: string
   url: string

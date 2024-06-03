@@ -28,19 +28,7 @@ function Table() {
         { planetsList.map((current) => (
           <TableItem
             key={ current.name }
-            name={ current.name }
-            rotation_period={ current.rotation_period }
-            orbital_period={ current.orbital_period }
-            diameter={ current.diameter }
-            climate={ current.climate }
-            gravity={ current.gravity }
-            terrain={ current.terrain }
-            surface_water={ current.surface_water }
-            population={ current.population }
-            films={ current.films }
-            created={ current.created }
-            edited={ current.edited }
-            url={ current.url }
+            item={ current }
           />
         ))}
       </tbody>
