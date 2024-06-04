@@ -1,8 +1,10 @@
 import { createContext } from 'react';
-import { PlanetInfoType } from '../types/types';
+import { FiltersType, PlanetInfoType } from '../types/types';
 
 type APIContextType = {
-  planetsList: PlanetInfoType[]
+  planetListByName: PlanetInfoType[]
+  filters: FiltersType[]
+  handleFilterByName: (content: string) => void
 };
 
 const APIInfoContext = createContext({} as APIContextType);

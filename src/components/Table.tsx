@@ -3,7 +3,16 @@ import APIInfoContext from '../context/APIInfoContext';
 import TableItem from './TableItem';
 
 function Table() {
-  const { planetsList } = useContext(APIInfoContext);
+  const { planetListByName, filters } = useContext(APIInfoContext);
+
+  // const currentFilters = () => {
+  //   planetsList.filter((planet) => (
+  //     filters.every(({info, value}) => )
+  //   ))
+  // };
+  //
+  // planet.name ---> info
+  // value ---> valor para filtrar a informção
 
   return (
     <table>
@@ -25,7 +34,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        { planetsList.map((current) => (
+        { planetListByName.map((current) => (
           <TableItem
             key={ current.name }
             item={ current }

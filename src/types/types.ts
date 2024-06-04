@@ -13,3 +13,7 @@ export type PlanetInfoType = {
   edited: string
   url: string
 };
+
+export type FiltersType = {
+
+};
