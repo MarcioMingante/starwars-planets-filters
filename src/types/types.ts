@@ -14,18 +14,12 @@ export type PlanetInfoType = {
   url: string
 };
 
-export type FiltersType = {
-  column: string
-  comparison: 'maior que' | 'menor que' | 'igual a'
-  value: number
-};
-
 export type InputType = {
   label?: string
   id: string
   type?: string
   name: string
-  placeholder: string
+  placeholder?: string
   dataTestid?: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   value: string | number
@@ -48,7 +42,18 @@ export type ButtonType = {
   text: string
 };
 
+export type FiltersType = {
+  column: string
+  comparison: 'maior que' | 'menor que' | 'igual a'
+  value: number
+};
+
 export type FilterItemType = {
   filter: FiltersType
   onClick: () => void
+};
+
+export type SortType = {
+  column: string
+  sort: 'ASC' | 'DESC' | ''
 };

@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react';
 import APIInfoContext from './APIInfoContext';
 import { getPlanetData } from '../services/api';
-import { FiltersType, PlanetInfoType } from '../types/types';
+import { FiltersType, PlanetInfoType, SortType } from '../types/types';
 
 function APIInfoProvider({ children }:{ children: React.ReactNode }) {
   const [planetsList, setPlanetsList] = useState<PlanetInfoType[]>([]);
   const [planetListByName, setPlanetListByName] = useState<PlanetInfoType[]>([]);
   const [filters, setFilters] = useState<FiltersType[]>([]);
+  const [order, setOrder] = useState<SortType>({
+    column: 'population',
+    sort: '',
+  });
 
   const handleFilterByName = (content: string) => {
     const filteredList = planetsList
@@ -21,6 +25,10 @@ function APIInfoProvider({ children }:{ children: React.ReactNode }) {
 
   const removeFilter = (filter: FiltersType) => {
     setFilters(filters.filter((event) => event.column !== filter.column));
+  };
+
+  const changeOrder = (sort: SortType) => {
+    setOrder(sort);
   };
 
   useEffect(() => {
@@ -41,6 +49,8 @@ function APIInfoProvider({ children }:{ children: React.ReactNode }) {
     addFilter,
     removeFilter,
     setFilters,
+    changeOrder,
+    order,
   };
 
   return (

@@ -1,12 +1,13 @@
 import { useContext, useEffect, useState } from 'react';
 import APIInfoContext from '../context/APIInfoContext';
 import TableItem from './TableItem';
-import { FiltersType, PlanetInfoType } from '../types/types';
+import { FiltersType, PlanetInfoType, SortType } from '../types/types';
 
 function Table() {
-  const { planetListByName, filters } = useContext(APIInfoContext);
+  const { planetListByName, filters, order, changeOrder } = useContext(APIInfoContext);
   const [filteredPlanetList,
     setFilteredPlanetList] = useState<PlanetInfoType[]>(planetListByName);
+  const [currentOrder, setCurrentOrder] = useState<SortType>(order);
 
   const compareValues = (
     comparison: string,
@@ -39,8 +40,43 @@ function Table() {
 
       setFilteredPlanetList(newList);
     };
+
     currentFilters();
   }, [filters, planetListByName]);
+
+  // useEffect(() => {
+  //   setCurrentOrder(order);
+  // }, [changeOrder]);
+
+  useEffect(() => {
+    const { column, sort } = currentOrder;
+
+    const sortItems = async () => {
+      if (sort === 'ASC') {
+        const sortedList = filteredPlanetList.sort((a, b) => {
+          const firstItem = a[column as keyof PlanetInfoType];
+          const secondItem = b[column as keyof PlanetInfoType];
+
+          return Number(firstItem) - Number(secondItem);
+        });
+
+        setFilteredPlanetList(sortedList);
+      }
+
+      if (sort === 'DESC') {
+        const sortedList = filteredPlanetList.sort((a, b) => {
+          const firstItem = a[column as keyof PlanetInfoType];
+          const secondItem = b[column as keyof PlanetInfoType];
+
+          return Number(secondItem) - Number(firstItem);
+        });
+
+        setFilteredPlanetList(sortedList);
+      }
+    };
+
+    sortItems();
+  }, [order]);
 
   return (
     <table>

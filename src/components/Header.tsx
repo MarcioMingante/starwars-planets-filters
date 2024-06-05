@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import APIInfoContext from '../context/APIInfoContext';
 import Input from './Input';
 import Select from './Select';
-import { FiltersType } from '../types/types';
+import { FiltersType, SortType } from '../types/types';
 import Button from './Button';
 import FiltersList from './FiltersList';
 
@@ -11,7 +11,6 @@ const numericOptions = ['population', 'rotation_period', 'orbital_period',
 const operatorOptions = ['maior que', 'menor que', 'igual a'];
 
 function Header() {
-  const { handleFilterByName, addFilter, filters } = useContext(APIInfoContext);
   const [infoOptions, setInfoOptions] = useState(numericOptions);
   const [planetName, setPlanetName] = useState('');
   const [formInfo, setFormInfo] = useState<FiltersType>({
@@ -19,6 +18,16 @@ function Header() {
     comparison: 'maior que',
     value: 0,
   });
+  const [sortInfo, setSortInfo] = useState<SortType>({
+    column: 'population',
+    sort: '',
+  });
+  const {
+    handleFilterByName,
+    addFilter,
+    filters,
+    changeOrder,
+  } = useContext(APIInfoContext);
 
   const handleSearchBarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPlanetName(e.target.value);
@@ -34,7 +43,20 @@ function Header() {
     });
   };
 
-  const handleCLick = () => {
+  const handleSortChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
+    setSortInfo({
+      ...sortInfo,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleClickSort = () => {
+    changeOrder(sortInfo);
+  };
+
+  const handleClickFilter = () => {
     addFilter(formInfo);
   };
 
@@ -105,8 +127,49 @@ function Header() {
           <Button
             type="button"
             dataTestid="button-filter"
-            onClick={ handleCLick }
+            onClick={ handleClickFilter }
             text="FILTRAR"
+          />
+        </div>
+
+        <div>
+          <Select
+            label="Coluna"
+            id="column-sort"
+            name="column"
+            dataTestid="column-sort"
+            onChange={ handleSortChange }
+            value={ sortInfo.column }
+            options={ numericOptions }
+          />
+
+          <div>
+            <Input
+              label="Ascendente"
+              id="ASC"
+              type="radio"
+              name="sort"
+              value="ASC"
+              dataTestid="column-sort-input-asc"
+              onChange={ handleSortChange }
+            />
+
+            <Input
+              label="Descendente"
+              id="DESC"
+              type="radio"
+              name="sort"
+              value="DESC"
+              dataTestid="column-sort-input-desc"
+              onChange={ handleSortChange }
+            />
+          </div>
+
+          <Button
+            type="button"
+            dataTestid="column-sort-button"
+            onClick={ handleClickSort }
+            text="ORDENAR"
           />
         </div>
       </form>

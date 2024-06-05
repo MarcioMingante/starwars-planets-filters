@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { FiltersType, PlanetInfoType } from '../types/types';
+import { FiltersType, PlanetInfoType, SortType } from '../types/types';
 
 type APIContextType = {
   planetListByName: PlanetInfoType[]
@@ -8,6 +8,8 @@ type APIContextType = {
   addFilter: (filter: FiltersType) => void
   removeFilter: (filter: FiltersType) => void
   setFilters: React.Dispatch<React.SetStateAction<FiltersType[]>>
+  changeOrder: (sort: SortType) => void
+  order: SortType
 };
 
 const APIInfoContext = createContext({} as APIContextType);
