@@ -5,6 +5,7 @@ type APIContextType = {
   planetListByName: PlanetInfoType[]
   filters: FiltersType[]
   handleFilterByName: (content: string) => void
+  addFilter: (filter: FiltersType) => void
 };
 
 const APIInfoContext = createContext({} as APIContextType);

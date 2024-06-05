@@ -1,18 +1,46 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import APIInfoContext from '../context/APIInfoContext';
 import TableItem from './TableItem';
+import { FiltersType, PlanetInfoType } from '../types/types';
 
 function Table() {
   const { planetListByName, filters } = useContext(APIInfoContext);
+  const [filteredPlanetList,
+    setFilteredPlanetList] = useState<PlanetInfoType[]>(planetListByName);
 
-  // const currentFilters = () => {
-  //   planetsList.filter((planet) => (
-  //     filters.every(({info, value}) => )
-  //   ))
-  // };
-  //
-  // planet.name ---> info
-  // value ---> valor para filtrar a informção
+  const compareValues = (
+    comparison: string,
+    planetColumn: string | string[],
+    value: number,
+  ) => {
+    if (comparison === 'maior que') {
+      return Number(planetColumn) > value ? planetColumn : undefined;
+    }
+    if (comparison === 'menor que') {
+      return Number(planetColumn) < value ? planetColumn : undefined;
+    }
+    if (comparison === 'igual a') {
+      return Number(planetColumn) === Number(value) ? planetColumn : undefined;
+    }
+    return planetColumn;
+  };
+
+  useEffect(() => {
+    const currentFilters = () => {
+      const newList = planetListByName.filter((planet: PlanetInfoType) => (
+        filters.every(({ column, comparison, value }: FiltersType) => {
+          const planetColumn = planet[column as keyof PlanetInfoType];
+
+          const result = compareValues(comparison, planetColumn, value);
+
+          return result;
+        })
+      ));
+
+      setFilteredPlanetList(newList);
+    };
+    currentFilters();
+  }, [filters, planetListByName]);
 
   return (
     <table>
@@ -34,7 +62,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        { planetListByName.map((current) => (
+        { filteredPlanetList.map((current) => (
           <TableItem
             key={ current.name }
             item={ current }
