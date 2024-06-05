@@ -22,7 +22,7 @@ function Table() {
     if (comparison === 'igual a') {
       return Number(planetColumn) === Number(value) ? planetColumn : undefined;
     }
-    return planetColumn;
+    return planetListByName;
   };
 
   useEffect(() => {

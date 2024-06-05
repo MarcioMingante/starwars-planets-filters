@@ -4,6 +4,7 @@ import Input from './Input';
 import Select from './Select';
 import { FiltersType } from '../types/types';
 import Button from './Button';
+import FiltersList from './FiltersList';
 
 const numericOptions = ['population', 'rotation_period', 'orbital_period',
   'diameter', 'surface_water'];
@@ -51,8 +52,6 @@ function Header() {
         column: newOptions[0],
       }));
     };
-
-    console.log(infoOptions);
     filterOptions();
   }, [filters]);
 
@@ -111,6 +110,7 @@ function Header() {
           />
         </div>
       </form>
+      <FiltersList />
     </header>
   );
 }

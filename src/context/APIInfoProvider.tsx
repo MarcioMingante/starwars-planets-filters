@@ -19,9 +19,9 @@ function APIInfoProvider({ children }:{ children: React.ReactNode }) {
     setFilters((prev) => [...prev, filter]);
   };
 
-  // const removeFilter = () => {
-
-  // };
+  const removeFilter = (filter: FiltersType) => {
+    setFilters(filters.filter((event) => event.column !== filter.column));
+  };
 
   useEffect(() => {
     const handleAPI = async () => {
@@ -35,7 +35,13 @@ function APIInfoProvider({ children }:{ children: React.ReactNode }) {
     handleAPI();
   }, []);
 
-  const value = { planetListByName, filters, handleFilterByName, addFilter };
+  const value = { planetListByName,
+    filters,
+    handleFilterByName,
+    addFilter,
+    removeFilter,
+    setFilters,
+  };
 
   return (
     <APIInfoContext.Provider value={ value }>

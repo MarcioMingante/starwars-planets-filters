@@ -1,9 +1,4 @@
-type ButtonType = {
-  type?: 'button' | 'reset' | 'submit' | undefined
-  dataTestid?: string
-  onClick: () => void
-  text: string
-};
+import { ButtonType } from '../types/types';
 
 function Button({ type = 'button', dataTestid = '', onClick, text }: ButtonType) {
   return (

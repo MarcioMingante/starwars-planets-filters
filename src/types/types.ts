@@ -40,3 +40,15 @@ export type SelectType = {
   value: string
   options: string[]
 };
+
+export type ButtonType = {
+  type?: 'button' | 'reset' | 'submit' | undefined
+  dataTestid?: string
+  onClick: () => void
+  text: string
+};
+
+export type FilterItemType = {
+  filter: FiltersType
+  onClick: () => void
+};
