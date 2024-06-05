@@ -1,16 +1,17 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import APIInfoContext from '../context/APIInfoContext';
 import Input from './Input';
 import Select from './Select';
 import { FiltersType } from '../types/types';
 import Button from './Button';
 
-const numericOptions = ['rotation_period', 'orbital_period',
-  'diameter', 'surface_water', 'population'];
+const numericOptions = ['population', 'rotation_period', 'orbital_period',
+  'diameter', 'surface_water'];
 const operatorOptions = ['maior que', 'menor que', 'igual a'];
 
 function Header() {
-  const { handleFilterByName, addFilter } = useContext(APIInfoContext);
+  const { handleFilterByName, addFilter, filters } = useContext(APIInfoContext);
+  const [infoOptions, setInfoOptions] = useState(numericOptions);
   const [planetName, setPlanetName] = useState('');
   const [formInfo, setFormInfo] = useState<FiltersType>({
     column: 'population',
@@ -36,6 +37,25 @@ function Header() {
     addFilter(formInfo);
   };
 
+  useEffect(() => {
+    const filterOptions = () => {
+      const newOptions = numericOptions.filter((option) => (
+        filters.every(({ column }) => {
+          return option !== column;
+        })
+      ));
+
+      setInfoOptions(newOptions);
+      setFormInfo((prev) => ({
+        ...prev,
+        column: newOptions[0],
+      }));
+    };
+
+    console.log(infoOptions);
+    filterOptions();
+  }, [filters]);
+
   return (
     <header>
       <form action="">
@@ -58,7 +78,7 @@ function Header() {
             dataTestid="column-filter"
             onChange={ handleFormChange }
             value={ formInfo.column }
-            options={ numericOptions }
+            options={ infoOptions }
           />
 
           <Select

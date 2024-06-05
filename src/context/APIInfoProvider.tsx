@@ -16,15 +16,7 @@ function APIInfoProvider({ children }:{ children: React.ReactNode }) {
   };
 
   const addFilter = (filter: FiltersType) => {
-    const checkFilter = filters.find((current) => current.column === filter.column);
-
-    if (checkFilter) {
-      setFilters((prev) => (
-        prev.map((current) => (current.column !== filter.column ? current : filter))
-      ));
-    } else {
-      setFilters((prev) => [...prev, filter]);
-    }
+    setFilters((prev) => [...prev, filter]);
   };
 
   // const removeFilter = () => {
