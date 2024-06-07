@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import APIInfoContext from '../context/APIInfoContext';
 import TableItem from './TableItem';
-import { FiltersType, PlanetInfoType, SortType } from '../types/types';
+import { FiltersType, PlanetInfoType } from '../types/types';
 
 function Table() {
   const { planetListByName, filters, order } = useContext(APIInfoContext);
